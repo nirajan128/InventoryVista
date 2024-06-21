@@ -15,10 +15,10 @@ passport.use(
     
       try {
         // Check if user exists in the database
-        const user = await db.query('SELECT * FROM users WHERE email = $1', [profile.email]);
+        const user = await db.query('SELECT * FROM users WHERE user_email = $1', [profile.email]);
         if (user.rows.length === 0) {
           // If user doesn't exist, create a new user in the database
-          const newUser = await db.query('INSERT INTO users (user_email, user_name, user_password) VALUES ($1, $2, $3) RETURNING *', [
+          const newUser = await db.query('INSERT INTO users (user_email, user_name,password) VALUES ($1, $2, $3) RETURNING *', [
             profile.email,
             profile.displayName,
             "Google"

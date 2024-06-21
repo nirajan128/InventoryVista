@@ -10,17 +10,12 @@ dotenv.config();
  */
 const db = new pg.Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: false,
+    ssl: {
+      rejectUnauthorized: false, // Temporary fix for self-signed certificates, should be handled properly in production
+    },
 }) 
 
 
-// Connect to the database
-db.connect()
-  .then(() => {
-    console.log('Connected to the database');
-  })
-  .catch(err => {
-    console.error('Error connecting to the database:', err);
-  });
+await db.connect();
 
 export default db;
