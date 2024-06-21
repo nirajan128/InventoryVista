@@ -36,6 +36,7 @@ jobs:
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         DB_PORT: ${{ secrets.DB_PORT }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        SECRET: ${{ secrets.SECRET }}
         
       run: |
         node index.js 
