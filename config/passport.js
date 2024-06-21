@@ -1,48 +1,53 @@
-import passport from "passport";
-import GoogleStrategy from "passport-google-oauth2";
-import db from "./database.js";
-import pg from "pg"
-import dotenv from "dotenv";
-dotenv.config();
+import passport from 'passport';
+import GoogleStrategy from 'passport-google-oauth2';
+import db from './database.js';// Assuming db.js is where you initialize and export your database connection
 
-/**
- * Google strategy using passport to add user if they don't exist in DB
- */
-passport.use("google",
-    new GoogleStrategy({
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/inventory",
-        userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
-    }), async(accessToken, refreshToken, profile, cb) =>{
-        try {
-            //Check if user exist in DB
-            const result =  await db.query("SELECT * FROM users WHERE email = $1", [profile.email.value]);
-            if(result.rows.length === 0){ //if not add new user to DB
-                const newUser = await db.query("INSERT INTO users (user_email, user_name, user_password) VALUE ($1, $2, $3) RETURNING *",
-                    [profile.email,profile.name,"GoogleAuthenticated"]
-                );
-                return cb(null, newUser.rows[0]);
-            }else{
-            //return the user
-            return cb(null, result.rows[0]);
-            }
-
-        } catch (err) {
-           return cb(err);
+passport.use(
+  'google',
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/inventory",
+      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo", // Adjust the URL as per your application setup
+    },
+    async (accessToken, refreshToken, profile, done) => {
+    
+      try {
+        // Check if user exists in the database
+        const user = await db.query('SELECT * FROM users WHERE email = $1', [profile.email]);
+        if (user.rows.length === 0) {
+          // If user doesn't exist, create a new user in the database
+          const newUser = await db.query('INSERT INTO users (user_email, user_name, user_password) VALUES ($1, $2, $3) RETURNING *', [
+            profile.email,
+            profile.displayName,
+            "Google"
+          ]);
+          done(null, newUser.rows[0]); 
+          console.log(profile);// Pass the new user to done callback
+        } else {
+          done(null, user.rows[0]); // User exists, pass the user to done callback
         }
+      } catch (err) {
+        done(err); // Pass any errors to done callback
+      }
     }
-)
+  )
+);
 
-/**
- * Serialize and Deserialize the user
- */
-passport.serializeUser((user, cb) => {
-    cb(null, user);
-  });
-  
-  passport.deserializeUser((user, cb) => {
-    cb(null, user);
-  });
+passport.serializeUser((user, done) => {
+  done(null, user); // Serialize the user object
+});
 
-  export default passport;
+passport.deserializeUser((user, done) => {
+  done(null, user); // Deserialize the user object
+});
+
+export default passport;
+
+
+
+
+
+
+

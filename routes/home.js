@@ -18,14 +18,4 @@ router.get("/inventory", (req,res) =>{
       }
 })
 
-router.get("/login", (req,res) => {
-    res.render("login.ejs")
-})
-
-router.get("/register", (req,res) => {
-    res.render("register.ejs")
-})
-
-
-
 export default router;

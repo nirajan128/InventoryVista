@@ -40,14 +40,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.get('/inventory', (req, res) => {
-    if (req.isAuthenticated()) {
-      res.render('index.ejs', { user: req.user });
-    } else {
-      res.redirect('/');
-    }
-  });
+app.use("/", router)
 
 app.use("/",authRoutes)
 
