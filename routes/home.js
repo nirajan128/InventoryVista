@@ -10,6 +10,14 @@ router.get("/", (req,res) => {
     res.render("home.ejs")
 })
 
+router.get("/inventory", (req,res) =>{
+    if (req.isAuthenticated()) {
+        res.render("index.ejs");
+      } else {
+        res.redirect("/login");
+      }
+})
+
 router.get("/login", (req,res) => {
     res.render("login.ejs")
 })

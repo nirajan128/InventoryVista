@@ -9,6 +9,7 @@ import passport from "passport";
 import dotenv from "dotenv"
 
 import router from "./routes/home.js";
+import authRoutes from "./routes/auth.js";
 
 /**
  * 2.Setup express and port
@@ -39,8 +40,16 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/", router);
-app.use("/login", router);
+
+app.get('/inventory', (req, res) => {
+    if (req.isAuthenticated()) {
+      res.render('index.ejs', { user: req.user });
+    } else {
+      res.redirect('/');
+    }
+  });
+
+app.use("/",authRoutes)
 
 /**
  * 5.host the app
