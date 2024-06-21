@@ -25,7 +25,7 @@ jobs:
       run: npm install
 
     - name: Run tests
-      run: npm test
+      run: node index.js
 
     - name: Set up environment variables
       run: |

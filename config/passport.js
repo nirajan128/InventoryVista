@@ -1,6 +1,7 @@
 import passport from "passport";
 import GoogleStrategy from "passport-google-oauth2";
-import db from "../config/database.js";
+import db from "./database.js";
+import pg from "pg"
 import dotenv from "dotenv";
 dotenv.config();
 

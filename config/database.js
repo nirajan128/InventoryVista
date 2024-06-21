@@ -3,15 +3,18 @@ import dotenv from "dotenv"
 
 dotenv.config();
 
-const isProduction = process.env.NODE_ENV === 'production';
+
 
 /**
  * setup data base with database
  */
 const db = new pg.Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: isProduction ? { rejectUnauthorized: false } : false
+    ssl: {
+      rejectUnauthorized: false, // Temporary fix for self-signed certificates, should be handled properly in production
+    },
 }) 
+
 
 await db.connect();
 
