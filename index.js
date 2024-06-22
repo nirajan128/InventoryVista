@@ -10,6 +10,7 @@ import dotenv from "dotenv"
 
 import router from "./routes/home.js";
 import authRoutes from "./routes/auth.js";
+import "./config/passport.js"
 
 /**
  * 2.Setup express and port
@@ -22,6 +23,7 @@ dotenv.config();
  * 3.setup Middleware
  */
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(express.static("public"));
 app.use(cors());
 
 

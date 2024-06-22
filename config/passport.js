@@ -1,6 +1,6 @@
 import passport from 'passport';
 import GoogleStrategy from 'passport-google-oauth2';
-import db from './database.js';// Assuming db.js is where you initialize and export your database connection
+import db from './database.js';//importing databse connection
 
 passport.use(
   'google',

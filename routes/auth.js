@@ -5,6 +5,9 @@ import "../config/passport.js"
 
 const router = express();
 
+/**
+ * Get route for google login
+ */
 router.get(
     "/auth/google",
     passport.authenticate("google", {
