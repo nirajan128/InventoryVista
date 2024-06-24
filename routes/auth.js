@@ -1,7 +1,6 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import passport from "passport";
-import { Strategy } from "passport-local";
 import db from '../config/database.js';
 
 const auth = express();
@@ -9,20 +8,28 @@ const saltRounds = 10;
 
 //home_page
 auth.get("/", (req,res) => {
-    res.render("home.ejs")
+    res.render("home.ejs", {
+      loginError: req.flash('loginError'),
+      loginSuccess: req.flash('loginSuccess'),
+      registerError: req.flash('registerError'),
+      registerSuccess: req.flash('registerSuccess')
+    })
 })
 
 auth.post("/register", async (req, res) => {
-    const { email, password, confirmPassword, username } = req.body; // get user input
+    const { email, password, confirmPassword, username } = req.body;
+    console.log(password, confirmPassword) // get user input
 
     if (password !== confirmPassword) {
-        return res.status(400).send("Passwords do not match.");
+        req.flash('registerError', 'password do not match')
+        return res.redirect("/")
     }
 
     try {
         const existingUserResult = await db.query("SELECT * FROM users WHERE user_email = $1", [email]);
         if (existingUserResult.rows.length > 0) {
-            return res.status(400).send("User already exists. Try logging in.");
+            req.flash('registerError', 'User already exists. Try logging in' ) //flash error message
+            return res.redirect("/")
         } else {
             // hashing the password
             const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -42,37 +49,56 @@ auth.post("/register", async (req, res) => {
             // log in after registering
             req.login(user, (err) => {
                 if (err) {
-             res.status(500).send("Error logging in after registration.");
+                req.flash('registerError', 'Error while logging in')
+                return res.redirect("/")
                 }
+                req.flash('registerSucess', "Succesfully logged in")
              res.redirect("/inventory");
             });
         }
     } catch (err) {
         console.error(err);
-        return res.status(500).send("Error while registering.");
+        req.flash('registerError', 'Error while registering')
     }
 });
 
-auth.post("/login", (req, res, next) => {
-    console.log('Login attempt');
-    passport.authenticate("local", (err, user, info) => {
-        if (err) {
-            console.log('Error during authentication:', err);
-            return next(err);
-        }
-        if (!user) {
-            console.log('Authentication failed:', info.message);
-            return res.redirect("/");
-        }
-        req.logIn(user, (err) => {
-            if (err) {
-                console.log('Error during login:', err);
-                return next(err);
-            }
-            console.log('Login successful');
-            return res.redirect("/inventory");
+
+//for inventory page of each user
+auth.get("/inventory", async (req,res) =>{
+  if (req.isAuthenticated()) {
+    try {
+      const result = await db.query(`SELECT user_name FROM users WHERE user_email = $1`, [req.user.user_email])
+      if(result.rows.length > 0){
+        const userName = result.rows[0].user_name;
+        res.render("index.ejs", {
+             userName: userName,
         });
-    })(req, res, next);
+      }else{
+        req.flash('loginError', 'something went wrong')
+         res.redirect("/");
+      }
+            
+    } catch (error) {
+      console.log(error);
+      req.flash('loginError', 'User does not exist')
+      res.redirect("/");
+      
+    }
+     
+    } else {
+      req.flash('loginError', 'User not authentcated')
+      res.redirect("/");
+      
+      console.log("user not authenticated")
+    }
+})
+
+auth.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/inventory',
+    failureRedirect: '/',
+    failureFlash: "error logging in", // enable flash messages for failure
+  })(req, res, next);
 });
 
 
@@ -95,31 +121,6 @@ auth.get("/auth/google/inventory",
         res.redirect("/inventory");
     }
 );
-//for inventory page of each user
-auth.get("/inventory", async (req,res) =>{
-    if (req.isAuthenticated()) {
-      try {
-        const result = await db.query(`SELECT user_name FROM users WHERE user_email = $1`, [req.user.user_email])
-        if(result.rows.length > 0){
-          const userName = result.rows[0].user_name;
-          res.render("index.ejs", {
-               userName: userName,
-          });
-        }else{
-          res.redirect("/");
-          console.log("something is wrong")
-        }
-              
-      } catch (error) {
-        console.log(error);
-        res.redirect("/");
-        
-      }
-       
-      } else {
-        res.redirect("/");
-        console.log("user not authenticated")
-      }
-})
+
 
 export default auth;

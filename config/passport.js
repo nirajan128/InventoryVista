@@ -21,13 +21,15 @@ passport.use("local", new Strategy(async function verify(username, password, cb)
             return cb(null, user);
           } 
           else{
-            return cb(err, false, {message: "Incorrect email or password"});
+            console.log("Something went wrong")
+            return cb(null, false , {loginError: "Something went wrong"});
           } 
 
         }
       })
     }else{
-      return cb(err,false,{message: "No user found"})
+      console.log("user does not exist")
+      return cb(null,false,{loginError: "No user found"})
     }
   } catch (err) {
     console.log(err)
