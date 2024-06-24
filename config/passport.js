@@ -1,7 +1,43 @@
 import passport from 'passport';
+import { Strategy } from 'passport-local';
+import bcrypt from 'bcrypt';
 import GoogleStrategy from 'passport-google-oauth2';
 import db from './database.js';//importing databse connection
 
+
+//local strategy
+passport.use("local", new Strategy(async function verify(username, password, cb) {
+  try {
+    const result = await db.query("SELECT * FROM users WHERE user_email = $1", [username]);
+    if(result.rows.length > 0){
+      const user = result.rows[0];
+      const storedHasedPassword = user.password;
+      bcrypt.compare(password, storedHasedPassword, (err, valid) => {
+        if(err){
+          console.log("Error comparting password");
+          return cb(err);
+        }else{
+          if(valid){
+            return cb(null, user);
+          } 
+          else{
+            return cb(err, false, {message: "Incorrect email or password"});
+          } 
+
+        }
+      })
+    }else{
+      return cb(err,false,{message: "No user found"})
+    }
+  } catch (err) {
+    console.log(err)
+  }
+   
+
+})
+)
+
+//Google strategy
 passport.use(
   'google',
   new GoogleStrategy(
@@ -36,12 +72,22 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user); // Serialize the user object
+  done(null, user.user_email); // Serialize the user ID
 });
 
-passport.deserializeUser((user, done) => {
-  done(null, user); // Deserialize the user object
+passport.deserializeUser(async (email, done) => {
+  try {
+    const result = await db.query('SELECT * FROM users WHERE user_email = $1', [email]);
+    if (result.rows.length > 0) {
+      done(null, result.rows[0]); // Deserialize the user object
+    } else {
+      done(new Error('User not found'));
+    }
+  } catch (err) {
+    done(err);
+  }
 });
+
 
 export default passport;
 

@@ -5,12 +5,12 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import session from "express-session";
-import passport from "passport";
+
 import dotenv from "dotenv"
 
-import router from "./routes/home.js";
-import authRoutes from "./routes/auth.js";
-import "./config/passport.js"
+import auth from "./routes/auth.js";
+import passport from "./config/passport.js"
+
 
 /**
  * 2.Setup express and port
@@ -42,9 +42,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/", router)
+app.use("/", auth);
 
-app.use("/",authRoutes)
 
 /**
  * 5.host the app

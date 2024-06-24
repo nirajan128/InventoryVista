@@ -3,55 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Two Containers Example</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
+    <title>Vista Inventory App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
+        .hero-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+            text-align: center;
         }
-        .container-fluid {
-            height: 100%;
+        .feature {
+            padding: 30px;
+            text-align: center;
         }
-        .red-container, .green-container {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            font-weight: bold;
+        .feature-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .google-btn {
+            background-color: #db4437;
             color: white;
         }
-        .red-container {
-            background-color: rgb(78, 136, 143);
+        .google-btn:hover {
+            background-color: #c23321;
+            color: white;
         }
-
-       
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Red Container -->
-            <div class=" col-12 col-lg-6 col-md-12 red-container">
-                <h1>Welcome to INVENTORY VISTA</h1>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Vista</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
             </div>
-            <!-- Green Container -->
-            <div class=" col-12 col-lg-6 col-md-12 green-container">
-                <img src="/images/logo-transparent-png.png" alt="logo" height="150" width="100%">
-                <form action="/auth/google" method="GET">
-                    <button class="btn btn-primary w-75 py-2" type="submit">Login with Google</button>
-                </form>
+        </div>
+    </nav>
+
+    <!-- Log In Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Log In</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form  action="/login" method="POST">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" name="username" placeholder="Enter email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn google-btn w-100">Log In</button>
+                        <hr>
+                        <button type="button" class="btn google-btn w-100">Log In with Google</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies (optional, for components like dropdowns) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm" action="/register" method="POST">
+                    <div class="mb-3">
+                        <label for="registerUsername" class="form-label">User Name</label>
+                        <input type="text" class="form-control" id="registerUsername" placeholder="Enter a user name" name="username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="registerEmail" placeholder="Enter email" name="email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="registerPassword" placeholder="Password" name="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword">
+                        <div id="passwordError" class="text-danger mt-2" style="display: none;">Passwords do not match</div>
+                    </div>
+                    <button type="submit" class="btn google-btn w-100">Register</button>
+                    <hr>
+                    <button type="button" class="btn google-btn w-100">Sign Up with Google</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="display-4">Welcome to Vista Inventory App</h1>
+            <p class="lead">Manage your inventory efficiently and effectively with our powerful tools.</p>
+            <a href="#" class="btn btn-primary btn-lg">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 feature">
+                <div class="feature-icon">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+                <h3>Track Inventory</h3>
+                <p>Keep track of all your inventory in one place with real-time updates.</p>
+            </div>
+            <div class="col-md-4 feature">
+                <div class="feature-icon">
+                    <i class="bi bi-graph-up"></i>
+                </div>
+                <h3>Analyze Data</h3>
+                <p>Analyze your inventory data with our powerful analytics tools.</p>
+            </div>
+            <div class="col-md-4 feature">
+                <div class="feature-icon">
+                    <i class="bi bi-cloud-upload"></i>
+                </div>
+                <h3>Cloud Storage</h3>
+                <p>Store your inventory data securely in the cloud and access it from anywhere.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="container p-4">
+            <p>&copy; 2024 Vista Inventory App. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 </body>
 </html>
