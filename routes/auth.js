@@ -133,5 +133,14 @@ auth.get("/auth/google/inventory",
     }
 );
 
+auth.get("/logout", (req,res) => {
+  req.logout((err) => {
+    if(err){
+      return next(err)
+    }
+    res.redirect("/")
+  })
+})
+
 
 export default auth;

@@ -1,0 +1,139 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+    --primary-color: #001233; /* Change this value based on your selected palette */
+    --secondary-color: #FF5500;
+    --text-color: #EFE0CA; /* Change this value based on your selected palette */
+} 
+
+.custom-height{
+    height: 100vh;
+}
+/* text styles */
+.normal-text{
+    color: var(--text-color);
+}
+.secondary-text{
+    color: var(--secondary-color);
+}
+.primary-text{
+    color: var(--primary-color);
+}
+
+h1,h2,h4{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+body, p {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400; /* Regular for body text */
+  }
+
+  /* body lement style */
+.primary-background{
+    background-color: var(--primary-color) !important;
+  }
+.scondary-background{
+    background-color: var(--text-color) !important;
+  }
+ 
+        .hero-section {
+            background-image: url(/images/tortoise-shell.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+          
+            padding: 60px 0;
+            text-align: center;
+        }
+        .feature {
+            padding: 30px;
+            text-align: start;
+        }
+        .feature-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .google-btn {
+            background-color: #db4437;
+            color: white;
+        }
+        .google-btn:hover {
+            background-color: #c23321;
+            color: white;
+        }
+        .nav-link {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav-link.login,
+        .nav-link.register {
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-right: 10px;
+        }
+        .nav-link.login:hover,
+        .nav-link.register:hover {
+            background-color: #669EA4;
+            color: white;
+        }
+
+        .normalLogin,
+        .normalRegister{
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .normalLogin:hover,
+        .normalRegister:hover{
+            background-color: #3A666B;
+            color: white;
+        }
+
+        .circle{
+            width: 10em;
+            height: 10em;
+            border-radius: 50%;
+            align-self: center;
+            background-color: var(--text-color);
+        }
+    
+/* Inventory page */
+.inventory-body {
+    background-color: var(--text-color);
+}
+
+.sidebar {
+    background-color: #001233;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    width: 250px;
+}
+
+.sidebar .nav-link {
+    color: white;
+}
+
+.sidebar .nav-link.active {
+    background-color: #ff5500;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
+

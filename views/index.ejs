@@ -5,9 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InventoryVista</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-    <h1>Hello <%= userName %></h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Inventory App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-target="dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-target="items">Items</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-target="suppliers">Suppliers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-target="orders">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-target="settings">Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="sidebar col-lg-3 col-md-4 d-none d-lg-block p-3">
+                <h2 class="text-center">Inventory App</h2>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-target="dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-target="items">Items</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-target="suppliers">Suppliers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-target="orders">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-target="settings">Settings</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="main-content col-lg-9 col-md-8 p-3">
+                <div id="dashboard" class="content-section active">
+                    <h1>Dashboard</h1>
+                    <p>Welcome to the Inventory Dashboard. Here you can see an overview of your inventory status.</p>
+                </div>
+                <div id="items" class="content-section">
+                    <h1>Items</h1>
+                    <p>Manage your items here.</p>
+                </div>
+                <div id="suppliers" class="content-section">
+                    <h1>Suppliers</h1>
+                    <p>Manage your suppliers here.</p>
+                </div>
+                <div id="orders" class="content-section">
+                    <h1>Orders</h1>
+                    <p>Manage your orders here.</p>
+                </div>
+                <div id="settings" class="content-section">
+                    <h1>Settings</h1>
+                    <p>Manage your settings here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.sidebar .nav-link, .navbar-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function () {
+                document.querySelectorAll('.sidebar .nav-link, .navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+                const target = this.getAttribute('data-target');
+                document.querySelectorAll('.content-section').forEach(section => {
+                    if (section.id === target) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
