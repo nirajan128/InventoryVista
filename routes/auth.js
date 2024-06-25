@@ -93,14 +93,25 @@ auth.get("/inventory", async (req,res) =>{
     }
 })
 
+
 auth.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/inventory',
-    failureRedirect: '/',
-    failureFlash: "error logging in", // enable flash messages for failure
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      req.flash('loginError', info.message || 'Invalid username or password');
+      return res.redirect('/');
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      req.flash('loginSuccess', 'Successfully logged in');
+      return res.redirect('/inventory');
+    });
   })(req, res, next);
 });
-
 
 
 /**

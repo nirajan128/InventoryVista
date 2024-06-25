@@ -14,7 +14,7 @@ passport.use("local", new Strategy(async function verify(username, password, cb)
       const storedHasedPassword = user.password;
       bcrypt.compare(password, storedHasedPassword, (err, valid) => {
         if(err){
-          console.log("Error comparting password");
+          console.log("Error comparing password");
           return cb(err);
         }else{
           if(valid){
@@ -22,14 +22,14 @@ passport.use("local", new Strategy(async function verify(username, password, cb)
           } 
           else{
             console.log("Something went wrong")
-            return cb(null, false , {loginError: "Something went wrong"});
+            return cb(null, false , {message: "Something went wrong"});
           } 
 
         }
       })
     }else{
       console.log("user does not exist")
-      return cb(null,false,{loginError: "No user found"})
+      return cb(null,false,{message: "No user found"})
     }
   } catch (err) {
     console.log(err)
