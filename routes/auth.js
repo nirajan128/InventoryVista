@@ -63,35 +63,7 @@ auth.post("/register", async (req, res) => {
 });
 
 
-//for inventory page of each user
-auth.get("/inventory", async (req,res) =>{
-  if (req.isAuthenticated()) {
-    try {
-      const result = await db.query(`SELECT user_name FROM users WHERE user_email = $1`, [req.user.user_email])
-      if(result.rows.length > 0){
-        const userName = result.rows[0].user_name;
-        res.render("index.ejs", {
-             userName: userName,
-        });
-      }else{
-        req.flash('loginError', 'something went wrong')
-         res.redirect("/");
-      }
-            
-    } catch (error) {
-      console.log(error);
-      req.flash('loginError', 'User does not exist')
-      res.redirect("/");
-      
-    }
-     
-    } else {
-      req.flash('loginError', 'User not authentcated')
-      res.redirect("/");
-      
-      console.log("user not authenticated")
-    }
-})
+
 
 
 auth.post('/login', (req, res, next) => {

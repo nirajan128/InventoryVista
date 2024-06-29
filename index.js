@@ -15,6 +15,7 @@ import flash from "connect-flash"; //to display error or success messege
 
 import auth from "./routes/auth.js";
 import passport from "./config/passport.js"
+import router from "./controllers/data.js"
 
 
 /**
@@ -50,6 +51,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", auth);
+app.use("/", router);
 
 
 /**

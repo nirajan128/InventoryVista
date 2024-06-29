@@ -8,28 +8,29 @@
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg primary-background">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Inventory App</a>
+            <a class="navbar-brand secondary-text" href="#">InventoryVista</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#" data-target="dashboard">Dashboard</a>
+                        <a class="nav-link normal-text" href="#">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-target="items">Items</a>
+                        <a class="nav-link normal-text" href="#">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-target="suppliers">Suppliers</a>
+                        <a class="nav-link normal-text" href="#">Settings</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-target="orders">Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-target="settings">Settings</a>
+                    <li class="nav-item ">
+                        <a class="btn btn-danger btn-md" href="/logout">
+                            <i class="bi bi-bar-chart"></i>
+                            Logout 
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -39,71 +40,285 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav class="sidebar col-lg-3 col-md-4 d-none d-lg-block p-3">
-                <h2 class="text-center">Inventory App</h2>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" data-target="dashboard">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-target="items">Items</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-target="suppliers">Suppliers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-target="orders">Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-target="settings">Settings</a>
-                    </li>
-                </ul>
+            <nav id="sidebarMenu" class=" col-12 col-md-3 col-lg-2 d-md-block bg-light sidebar d-flex flex-lg-row flex-sm-column">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active primary-text" aria-current="page" href="#" data-target="dashboard">
+                                <i class="bi bi-house"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link primary-text" href="#" data-target="inventory">
+                                <i class="bi bi-box-seam"></i>
+                                Inventory
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link primary-text" href="#" data-target="suppliers">
+                                <i class="bi bi-people"></i>
+                                Suppliers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link primary-text" href="#" data-target="orders">
+                                <i class="bi bi-receipt"></i>
+                                Orders
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link primary-text" href="#" data-target="report">
+                                <i class="bi bi-bar-chart"></i>
+                                Reports
+                            </a>
+                        </li>
+                       
+                    </ul>
+                </div>
             </nav>
 
             <!-- Main Content -->
-            <div class="main-content col-lg-9 col-md-8 p-3">
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div id="dashboard" class="content-section active">
-                    <h1>Dashboard</h1>
-                    <p>Welcome to the Inventory Dashboard. Here you can see an overview of your inventory status.</p>
+
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Welcome <%= user.user_name %></h1>
+                    </div>
+    
+                    <!-- Example Cards -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Items</h5>
+                                    <p class="card-text"><%= totalItem %></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Low Stock</h5>
+                                    <p class="card-text">45</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Pending Orders</h5>
+                                    <p class="card-text">10</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Example Chart -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Inventory Overview</h5>
+                        <canvas id="inventoryChart"></canvas>
+                    </div>
                 </div>
-                <div id="items" class="content-section">
-                    <h1>Items</h1>
-                    <p>Manage your items here.</p>
                 </div>
-                <div id="suppliers" class="content-section">
-                    <h1>Suppliers</h1>
-                    <p>Manage your suppliers here.</p>
-                </div>
-                <div id="orders" class="content-section">
-                    <h1>Orders</h1>
-                    <p>Manage your orders here.</p>
-                </div>
-                <div id="settings" class="content-section">
-                    <h1>Settings</h1>
-                    <p>Manage your settings here.</p>
-                </div>
+                <div id="inventory" class="content-section">
+                    <div class="container d-flex flex-column flex-lg-row justify-content-between mt-5 align-items-center">
+                        <h1 class="h2">Inventory Overview</h1>
+                        <div class="button">
+                            <a href="#" class="btn btn-light btn-lg primary-background text-light fs-6" role="button" data-bs-toggle="modal" data-bs-target="#itemModal">Add item</a>
+                            <a href="#" class="btn btn-light btn-lg primary-background text-light fs-6" role="button" data-bs-toggle="modal" data-bs-target="#supplierModal">Add supplier</a>
+                        </div>
+                        </div>
+                        <div class=" table-responsive mt-3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Item ID</th>
+                                        <th>Item Name</th>
+                                        <th>Supplier</th>
+                                        <th>Min Stock Level</th>
+                                        <th>Available Stock</th>
+                                        <th>To Order</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% allData.forEach(item =>{ %>
+                                        <tr>
+                                            <td><%= item.item_id  %></td>
+                                            <td><%= item.item_name %></td>
+                                            <td><%= item.supplier_name %></td>
+                                            <td><%= item.min_stock_level %></td>
+                                            <td><%= item.available_stock %></td>
+                                            <td><%= item.to_order %></td>
+                                            <td>
+                                                <!-- Button to Open the Update Modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateStockModal<%= item.item_id %>">
+    Update
+</button>
+
+<!-- Update Stock Modal -->
+<div class="modal fade" id="updateStockModal<%= item.item_id %>" tabindex="-1" aria-labelledby="updateStockModalLabel<%= item.item_id %>" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateStockModalLabel<%= item.item_id %>">Update Stock for <%= item.item_name %></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form id="updateStockForm<%= item.item_id %>" action="/updateStock" method="POST">
+                    <input type="hidden" name="item_id" value="<%= item.item_id %>">
+                    <div class="mb-3">
+                        <label for="available_stock<%= item.item_id %>" class="form-label">Available Stock</label>
+                        <input type="number" class="form-control" id="available_stock<%= item.item_id %>" name="available_stock" value="<%= item.available_stock %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="min_stock_level<%= item.item_id %>" class="form-label">Minimum Stock Level</label>
+                        <input type="number" class="form-control" id="min_stock_level<%= item.item_id %>" name="min_stock_level" value="<%= item.min_stock_level %>" required>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        document.querySelectorAll('.sidebar .nav-link, .navbar-nav .nav-link').forEach(link => {
-            link.addEventListener('click', function () {
-                document.querySelectorAll('.sidebar .nav-link, .navbar-nav .nav-link').forEach(link => link.classList.remove('active'));
-                this.classList.add('active');
-                const target = this.getAttribute('data-target');
-                document.querySelectorAll('.content-section').forEach(section => {
-                    if (section.id === target) {
-                        section.classList.add('active');
-                    } else {
-                        section.classList.remove('active');
-                    }
-                });
-            });
-        });
-    </script>
+                                            </td>
+                                        </tr>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+                                   <% }) %>
+                                </tbody>
+
+                            </table>
+                    </div>
+                </div>
+                <div id="suppliers" class="content-section">
+                    <div class="container mt-5">
+                        <h2>Supplier Overview</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Supplier Name</th>
+                                    <th>Supplier Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%suppliers.forEach(supplier => {%>
+                                    <tr>
+                                        <td><%= supplier.supplier_name %></td>
+                                        <td><%= supplier.contact_info %></td>
+                                    </tr>
+
+                                <% })%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="orders" class="content-section">Orders</div>
+                <div id="report" class="content-section">Report</div> 
+            </main>
+        </div>
+    </div>
+
+        <!-- Supplier Modal -->
+        <div class="modal fade" id="supplierModal" tabindex="-1" aria-labelledby="supplierModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="supplierModalLabel">Add Supplier</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/addSupplier" method="post" class="needs-validation" novalidate>
+                            <fieldset>
+                            <legend>Add a Supplier</legend>
+                            <div class="mb-3">
+                                <label for="supplier" class="form-label">Supplier</label>
+                                <input type="text" id="supplier" name="supplier" class="form-control" placeholder="supplier" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid supplier.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contact" class="form-label">Contact</label>
+                                <input type="text" id="contact" name="contact" class="form-control" placeholder="abc@gmail.com" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid contact.
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Add supplier</button>
+                        </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+          <!-- Item Modal -->
+          <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="itemModalLabel">Add Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/addItem" method="post" class="needs-validation" novalidate>
+                            <fieldset>
+                            <legend>Add an item</legend>
+                            <div class="mb-3">
+                                <label for="itemName" class="form-label">Item name</label>
+                                <input type="text" id="itemName" name="itemName" class="form-control" placeholder="item name" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid name.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label">Quantity</label>
+                                <input type="number" id="quantity" name="quantity" class="form-control" placeholder="quantity" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid quantity.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="supplier" class="form-label">Suppliers</label>
+                                <select name="supplier" id="supplier" class="form-select">
+                                    <% suppliers.forEach(supplier => { %>
+                                        <option value="<%= supplier.supplier_id %>"><%= supplier.supplier_name %></option>
+                                    <% }); %>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please provide a valid supplier.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="min_stock" class="form-label">Min-stock</label>
+                                <input type="number" id="min_stock" name="min_stock" class="form-control" placeholder="Minimum stock for the item" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid quantity.
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary" type="submit">Add Item</button>
+                        </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/scripts/features.js"></script>
 </body>
+</html>
+
 </html>

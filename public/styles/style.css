@@ -8,6 +8,31 @@
     --text-color: #EFE0CA; /* Change this value based on your selected palette */
 } 
 
+/* Default font-sizes */
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+p,a,th,td {
+    font-size: 1rem;
+}
+
 .custom-height{
     height: 100vh;
 }
@@ -103,31 +128,6 @@ body, p {
         }
     
 /* Inventory page */
-.inventory-body {
-    background-color: var(--text-color);
-}
-
-.sidebar {
-    background-color: #001233;
-    color: white;
-    height: 100vh;
-    position: fixed;
-    width: 250px;
-}
-
-.sidebar .nav-link {
-    color: white;
-}
-
-.sidebar .nav-link.active {
-    background-color: #ff5500;
-}
-
-.main-content {
-    margin-left: 250px;
-    padding: 20px;
-}
-
 .content-section {
     display: none;
 }
@@ -136,4 +136,39 @@ body, p {
     display: block;
 }
 
+.sidebar .nav-link.active {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.navbar-toggler-icon{
+    color: #FF5500;;
+}
+
+/* Make sure the sidebar collapses properly */
+/* Make sure the sidebar collapses properly */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem !important;
+    }
+
+    h2 {
+        font-size: 1.75rem !important;
+    }
+
+    h3 {
+        font-size: 1.5rem !important;
+    }
+    h4 {
+        font-size: 1.25rem !important;
+    }
+
+    h5 {
+        font-size: 1.125rem !important;
+    }
+
+    p,a,th,td {
+        font-size: 0.875rem !important; /* 14px */
+    }
+}
 
