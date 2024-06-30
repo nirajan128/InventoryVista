@@ -22,7 +22,7 @@ import router from "./controllers/data.js"
  * 2.Setup express and port
  */
 const app = express();
-const PORT = 3000;
+const PORT =process.env.PORT || 3000;
 
 
 /**
