@@ -43,7 +43,6 @@ auth.post("/register", async (req, res) => {
             const result = await db.query(insertUserQuery, insertUserValues);
             const user = result.rows[0];
 
-            console.log(user);
             console.log("Register succesful")
 
             // log in after registering

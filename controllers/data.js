@@ -1,22 +1,17 @@
 import express from "express"
 import db from "../config/database.js"
+import passport from "../config/database.js";
 
 const router = express();
 
 //Middileware to insure if the user is authenticated
-function ensureAuthenticated(req, res, next){
-    if(req.isAuthenticated()){
-        try {
-            return next();
-        } catch (error) {
-            req.flash('loginError', 'something went wrong')
-            res.redirect("/");
-        }
-    }else{
-        req.flash('loginError', 'User does not exist')
-        res.redirect("/");
-         
-    }   
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    req.flash('loginError', 'User does not exist');
+    res.redirect('/');
+  }
 }
 
 //for inventory page of each user
