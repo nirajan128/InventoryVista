@@ -46,7 +46,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://inventory-vista-1380f6b5a8bd.herokuapp.com/inventory",
+      callbackURL: "https://inventory-vista-1380f6b5a8bd.herokuapp.com/auth/google/inventory",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo", // Adjust the URL as per your application setup
     },
     async (accessToken, refreshToken, profile, done) => {
